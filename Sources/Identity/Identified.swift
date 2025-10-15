@@ -29,6 +29,8 @@ extension Identified: Equatable where Value: Equatable {}
 
 extension Identified: Hashable where Value: Hashable {}
 
+extension Identified: Sendable where ID: Sendable, Value: Sendable {}
+
 /// Simple typealias in case you need to use an already `Identifiable` type with `Identified` APIs.
 public typealias AsIdentified<Value: Identifiable> = Identified<Value.ID, Value>
 
