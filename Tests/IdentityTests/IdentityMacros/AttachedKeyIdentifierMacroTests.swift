@@ -1,8 +1,8 @@
 //
-//  AttachedIdentifierMacroTests.swift
+//  AttachedKeyIdentifierMacroTests.swift
 //  swift-identity
 //
-//  Created by Óscar Morales Vivó on 9/21/23.
+//  Created by Óscar Morales Vivó on 11/9/25.
 //
 
 import Foundation
@@ -18,36 +18,36 @@ import XCTest
 @testable import IdentityMacros
 
 @MainActor
-let testAttachedIdentifierMacro: [String: Macro.Type] = [
-    "Identifier": AttachedIdentifierMacro.self
+let testAttachedKeyIdentifierMacro: [String: Macro.Type] = [
+    "KeyIdentifier": AttachedKeyIdentifierMacro.self
 ]
 #endif
 
 @MainActor
-final class AttachedIdentifierMacroTests: XCTestCase {
+final class AttachedKeyIdentifierMacroTests: XCTestCase {
     func testAttachedMacroSimpleUseExpansion() throws {
         #if canImport(IdentityMacros)
         assertMacroExpansion(
             """
-            @Identifier<UUID>
-            public struct ImageID: ResourceID, FileID, MediaID {}
+            @KeyIdentifier<String>
+            public struct ImageID {}
             """,
             expandedSource: """
-            public struct ImageID: ResourceID, FileID, MediaID {
+            public struct ImageID {
 
-                public init(rawValue: UUID) {
+                public init(rawValue: String) {
                     self.rawValue = rawValue
                 }
 
-                public typealias RawValue = UUID
+                public typealias RawValue = String
 
-                public var rawValue: UUID
+                public var rawValue: String
             }
 
-            extension ImageID: Identifier {
+            extension ImageID: Identifier, CodingKeyRepresentable {
             }
             """,
-            macros: testAttachedIdentifierMacro
+            macros: testAttachedKeyIdentifierMacro
         )
         #endif
     }
@@ -56,40 +56,32 @@ final class AttachedIdentifierMacroTests: XCTestCase {
         #if canImport(IdentityMacros)
         assertMacroExpansion(
             """
-            @Identifier<UUID> struct ImageID: ResourceID, FileID, MediaID {}
+            @KeyIdentifier<String> struct ImageID: ResourceID, FileID, MediaID {}
             """,
             expandedSource: """
             struct ImageID: ResourceID, FileID, MediaID {
 
-                init(rawValue: UUID) {
+                init(rawValue: String) {
                     self.rawValue = rawValue
                 }
 
-                typealias RawValue = UUID
+                typealias RawValue = String
 
-                var rawValue: UUID
+                var rawValue: String
             }
 
-            extension ImageID: Identifier {
+            extension ImageID: Identifier, CodingKeyRepresentable {
             }
             """,
-            macros: testAttachedIdentifierMacro
+            macros: testAttachedKeyIdentifierMacro
         )
         #endif
     }
 }
 
-protocol SomeProtocol {}
-
-protocol SomeOtherProtocol {}
-
-@Identifier<UUID> struct GlobalScopeID {}
-
 // Type declared here to verify that attached macro actually works.
 //
 // Cannot be used in a local type.
-struct TestStruct: Identifiable {
-    @Identifier<UUID> struct TestID: SomeProtocol, SomeOtherProtocol {}
-
-    var id: TestID
+extension TestStruct {
+    @KeyIdentifier<String> struct TestKeyID: SomeProtocol, SomeOtherProtocol {}
 }

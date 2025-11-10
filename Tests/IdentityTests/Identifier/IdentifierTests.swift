@@ -30,7 +30,7 @@ struct IdentifierTests {
     // Testing using a non-trivial value type as an ID type.
     @Test func complexIdentifierWorks() {
         struct Person {
-            #Identifier<PersonName>("ID")
+            #ID<PersonName>("ID")
 
             var id: ID {
                 .init(rawValue: .init(firstName: firstName, lastName: lastName))

@@ -1,5 +1,5 @@
 //
-//  FreestandingIdentifierMacroTests.swift
+//  FreestandingIDMacroTests.swift
 //  swift-identity
 //
 //  Created by Óscar Morales Vivó on 9/21/23.
@@ -17,17 +17,19 @@ import XCTest
 #if canImport(IdentityMacros)
 @testable import IdentityMacros
 
+@MainActor
 let testFreestandingMacros: [String: Macro.Type] = [
-    "Identifier": FreestandingIdentifierMacro.self
+    "Identifier": FreestandingIDMacro.self
 ]
 #endif
 
-final class FreestandingIdentifierMacroTests: XCTest {
+@MainActor
+final class FreestandingIDMacroTests: XCTest {
     // Not quite a unit test but a check that the macro actually expands.
     func testBuildSimpleFreestandingMacro() throws {
         struct TestStruct: Identifiable {
             // Declaration has to happen in a different scope than creation. Within a local `struct` works.
-            #Identifier<UUID>("TestID")
+            #ID<UUID>("TestID")
 
             var id: TestID
         }
@@ -40,7 +42,7 @@ final class FreestandingIdentifierMacroTests: XCTest {
         #if canImport(IdentityMacros)
         assertMacroExpansion(
             """
-            #Identifier<UUID>(\"ID\")
+            #ID<UUID>(\"ID\")
             """,
             expandedSource: """
             struct ID: Identifier {

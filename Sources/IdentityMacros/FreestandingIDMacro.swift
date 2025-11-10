@@ -1,5 +1,5 @@
 //
-//  FreestandingIdentifierMacro.swift
+//  FreestandingIDMacro.swift
 //  swift-identity
 //
 //  Created by Óscar Morales Vivó on 9/20/23.
@@ -8,11 +8,11 @@
 import SwiftSyntax
 import SwiftSyntaxMacros
 
-public struct FreestandingIdentifierMacro {}
+public struct FreestandingIDMacro {}
 
 // MARK: - DeclarationMacro Conformance
 
-extension FreestandingIdentifierMacro: DeclarationMacro {
+extension FreestandingIDMacro: DeclarationMacro {
     public static func expansion(
         of node: some FreestandingMacroExpansionSyntax,
         in _: some MacroExpansionContext

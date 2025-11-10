@@ -7,12 +7,12 @@ import PackageDescription
 let package = Package(
     name: "swift-identity",
     platforms: [
-        .macOS(.v10_15),
-        .iOS(.v13),
-        .tvOS(.v13),
-        .watchOS(.v6),
+        .macOS("12.3"),
+        .iOS("15.4"),
+        .tvOS("15.4"),
+        .watchOS("8.5"),
         .visionOS(.v1),
-        .macCatalyst(.v13)
+        .macCatalyst("15.4")
     ],
     products: [
         .library(
