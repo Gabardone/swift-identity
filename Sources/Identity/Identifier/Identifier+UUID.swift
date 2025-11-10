@@ -39,3 +39,20 @@ public extension Identifier where RawValue == UUID, Self: CustomStringConvertibl
         rawValue.uuidString.lowercased()
     }
 }
+
+public extension Identifier where RawValue == UUID, Self: CodingKeyRepresentable {
+    /// Default conformance of UUID-backed ``Identifier`` types to `CodingKeyRepresentable`
+    ///
+    /// We translate to/from the lowercase `UUID.uuidString` as per the policy of the other default conformances.
+    init?(codingKey: some CodingKey) {
+        guard let uuid = UUID(uuidString: codingKey.stringValue) else {
+            return nil
+        }
+
+        self.init(rawValue: uuid)
+    }
+
+    var codingKey: any CodingKey {
+        rawValue.uuidString.lowercased().codingKey
+    }
+}

@@ -17,11 +17,13 @@ import XCTest
 #if canImport(IdentityMacros)
 @testable import IdentityMacros
 
+@MainActor
 let testAttachedIdentifiableMacro: [String: Macro.Type] = [
     "Identifiable": AttachedIdentifiableMacro.self
 ]
 #endif
 
+@MainActor
 final class AttachedIdentifiableMacroTests: XCTestCase {
     func testAttachedMacroSimpleUseExpansion() throws {
         #if canImport(IdentityMacros)

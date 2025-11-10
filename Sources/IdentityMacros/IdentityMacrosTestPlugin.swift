@@ -14,7 +14,8 @@ struct IdentityMacrosTestPlugin: CompilerPlugin {
     let providingMacros: [Macro.Type] = [
         AttachedIdentifiableMacro.self,
         AttachedIdentifierMacro.self,
-        FreestandingIdentifierMacro.self
+        AttachedKeyIdentifierMacro.self,
+        FreestandingIDMacro.self
     ]
 }
 
