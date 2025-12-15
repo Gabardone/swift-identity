@@ -22,7 +22,7 @@ let package = Package(
     ],
     dependencies: [
         // Depend on the Swift 6.0 release of SwiftSyntax
-        .package(url: "https://github.com/swiftlang/swift-syntax.git", from: "601.0.1")
+        .package(url: "https://github.com/swiftlang/swift-syntax", "509.0.0" ..< "603.0.0")
     ],
     targets: [
         .macro(
